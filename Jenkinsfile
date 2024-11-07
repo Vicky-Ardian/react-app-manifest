@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    environment {
+        GITHUB_CREDENTIALS = credentials('github')
+    }
     parameters {
         string(name: 'DOCKER_IMAGE', defaultValue: '', description: 'The Docker image tag to update in the manifest')
     }
@@ -27,14 +29,28 @@ pipeline {
         stage('Commit and Push Manifest Changes') {
             steps {
                 script {
-                    echo "Committing and pushing updated manifest to Git."
-                    sh """
-                    git config --global user.name "Vicky"
-                    git config --global user.email "jkasyqy@gmail.com"
-                    git add .
-                    git commit -m "Update image tag to ${params.DOCKER_IMAGE}"
-                    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/react-app-manifest.git HEAD:main
-                    """
+                    // Menggunakan kredensial GitHub untuk melakukan push
+                    catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                        withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                            // Konfigurasi email dan username untuk git commit
+                            sh "git config user.email 'jkasyqy@gmail.com'"
+                            sh "git config user.name 'Vicky112'"
+
+                            // Menampilkan isi file deployment.yaml sebelum perubahan
+                            sh "cat deployment.yaml"
+
+                            // Mengganti image tag pada deployment.yaml dengan tag Docker baru
+                            sh "sed -i 's|vikiardian/react-app.*|vikiardian/react-app:${DOCKERTAG}|g' Deployment.yaml"
+
+                            // Menampilkan isi file deployment.yaml setelah perubahan
+                            sh "cat deployment.yaml"
+
+                            // Menambahkan perubahan, commit dan push ke GitHub
+                            sh "git add ."
+                            sh "git commit -m 'Update manifest: ${env.BUILD_NUMBER}'"
+                            sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/react-app-manifest.git HEAD:main"
+                        }
+                    }
                 }
             }
         }
