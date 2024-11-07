@@ -33,7 +33,7 @@ pipeline {
                     git config --global user.email "jkasyqy@gmail.com"
                     git add .
                     git commit -m "Update image tag to ${params.DOCKER_IMAGE}"
-                    git push origin main
+                    git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/react-app-manifest.git HEAD:main
                     """
                 }
             }
