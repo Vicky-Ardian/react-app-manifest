@@ -15,7 +15,7 @@ spec:
         app: react
     spec:
       containers:
-      - image: vikiardian/react-app:5
+      - image: vikiardian/react-app:24
         name: react-app
         args:
         - liveness
