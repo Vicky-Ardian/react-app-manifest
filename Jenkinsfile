@@ -36,7 +36,7 @@ pipeline {
                             // Menambahkan perubahan, commit dan push ke GitHub
                             sh "git add ."
                             sh "git commit -m 'Update manifest: ${env.BUILD_NUMBER}'"
-                            sh "git push https://$GIT_USER:$GIT_PASSWORD@github.com/Vicky-Ardian/react-app-manifest.git HEAD:main"
+                            sh 'git push https://$GIT_USER:$GIT_PASSWORD@github.com/Vicky-Ardian/react-app-manifest.git HEAD:main'
                         }
                     }
                 }
