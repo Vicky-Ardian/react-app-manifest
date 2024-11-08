@@ -35,4 +35,6 @@ spec:
   - port: 443
     targetPort: 3000
     nodePort: 31235
+  selector:
+    app: react
   type: NodePort
