@@ -19,7 +19,7 @@ pipeline {
                 script {
                     // Menggunakan kredensial GitHub untuk melakukan push
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([usernamePassword(credentialsId: 'your-credential-id', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USER')]) {
+                        withCredentials([usernamePassword(credentialsId: 'github', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USER')]) {
                             // Konfigurasi email dan username untuk git commit
                             sh "git config user.email 'jkasyqy@gmail.com'"
                             sh "git config user.name 'Vicky112'"
