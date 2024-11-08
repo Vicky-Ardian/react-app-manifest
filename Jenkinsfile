@@ -14,18 +14,6 @@ pipeline {
             }
         }
 
-        stage('Update Kubernetes Manifest') {
-            steps {
-                script {
-                    echo "Updating Kubernetes manifest with image: ${params.DOCKER_IMAGE}"
-                    sh """
-                    sed -i 's|image: .*|image: ${params.DOCKER_IMAGE}|g' Deployment.yaml
-                    """
-                    echo "Kubernetes manifest updated."
-                }
-            }
-        }
-
         stage('Commit and Push Manifest Changes') {
             steps {
                 script {
@@ -40,7 +28,7 @@ pipeline {
                             sh "cat Deployment.yaml"
 
                             // Mengganti image tag pada deployment.yaml dengan tag Docker baru
-                            sh "sed -i 's|vikiardian/react-app.*|vikiardian/react-app:${DOCKERTAG}|g' Deployment.yaml"
+                            sh "sed -i 's|image: .*|image: ${params.DOCKER_IMAGE}|g' Deployment.yaml"
 
                             // Menampilkan isi file deployment.yaml setelah perubahan
                             sh "cat Deployment.yaml"
