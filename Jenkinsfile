@@ -19,7 +19,7 @@ pipeline {
                 script {
                     // Menggunakan kredensial GitHub untuk melakukan push
                     catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                        withCredentials([usernamePassword(credentialsId: 'github', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        withCredentials([usernamePassword(credentialsId: 'your-credential-id', passwordVariable: 'GIT_PASSWORD', usernameVariable: 'GIT_USER')]) {
                             // Konfigurasi email dan username untuk git commit
                             sh "git config user.email 'jkasyqy@gmail.com'"
                             sh "git config user.name 'Vicky112'"
@@ -36,7 +36,7 @@ pipeline {
                             // Menambahkan perubahan, commit dan push ke GitHub
                             sh "git add ."
                             sh "git commit -m 'Update manifest: ${env.BUILD_NUMBER}'"
-                            sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/react-app-manifest.git HEAD:main"
+                            sh "git push https://$GIT_USER:$GIT_PASSWORD@github.com/Vicky-Ardian/react-app-manifest.git HEAD:main"
                         }
                     }
                 }
