@@ -37,13 +37,13 @@ pipeline {
                             sh "git config user.name 'Vicky112'"
 
                             // Menampilkan isi file deployment.yaml sebelum perubahan
-                            sh "cat deployment.yaml"
+                            sh "cat Deployment.yaml"
 
                             // Mengganti image tag pada deployment.yaml dengan tag Docker baru
                             sh "sed -i 's|vikiardian/react-app.*|vikiardian/react-app:${DOCKERTAG}|g' Deployment.yaml"
 
                             // Menampilkan isi file deployment.yaml setelah perubahan
-                            sh "cat deployment.yaml"
+                            sh "cat Deployment.yaml"
 
                             // Menambahkan perubahan, commit dan push ke GitHub
                             sh "git add ."
