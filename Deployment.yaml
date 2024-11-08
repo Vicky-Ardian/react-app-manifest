@@ -24,17 +24,13 @@ status: {}
 apiVersion: v1
 kind: Service
 metadata:
-  name: react-service
+  name: ract-service
   labels:
     app: react-service
 spec:
+  type: NodePort
   ports:
-  - port: 80
-    targetPort: 3000
-    nodePort: 31234
   - port: 443
     targetPort: 3000
-    nodePort: 31235
   selector:
     app: react
-  type: NodePort
