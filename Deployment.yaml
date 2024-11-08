@@ -17,15 +17,8 @@ spec:
       containers:
       - image: vikiardian/react-app:24
         name: react-app
-        args:
-        - liveness
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 3000
-        initialDelaySeconds: 3
-        periodSeconds: 3
-
+        resources: {}
+status: {}
 ---
 
 apiVersion: v1
