@@ -15,7 +15,7 @@ spec:
         app: react
     spec:
       containers:
-      - image: vikiardian/react-app:26
+      - image: vikiardian/react-app:1
         name: react-app
         resources: {}
 status: {}
